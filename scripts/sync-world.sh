@@ -14,11 +14,11 @@ pi_dir="$(setting PI_DIR jcraft)"
 direction="${1:-}"
 [[ "$direction" == push || "$direction" == pull ]] || { echo "Usage: $0 push|pull" >&2; exit 2; }
 
-if [[ -n "$(docker compose ps -q --status running mc 2>/dev/null)" ]]; then
+if docker compose exec -T mc true >/dev/null 2>&1; then
   echo "The local server is running. Stop it first: docker compose stop mc" >&2
   exit 1
 fi
-if [[ -n "$(ssh "$pi_host" "cd $pi_dir && docker compose ps -q --status running mc")" ]]; then
+if ssh "$pi_host" "cd $pi_dir && docker compose exec -T mc true" >/dev/null 2>&1; then
   echo "The Pi server is running. Stop it first: ssh $pi_host 'cd $pi_dir && docker compose stop mc'" >&2
   exit 1
 fi

@@ -71,13 +71,8 @@ Pi over the LAN, or over Tailscale when you're away. Never port-forward SSH.
 Same clone. In `.env`, leave `COMPOSE_PROFILES` empty and set `PI_HOST` (an SSH host alias
 for the Pi) and `PI_DIR`. Use the **same `SEED`** as the Pi.
 
-The scripts call `docker compose` (Compose v2). On Fedora with Podman:
-
-```sh
-sudo dnf install docker-compose
-systemctl --user enable --now podman.socket
-export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock   # add to your shell rc
-```
+The scripts call `docker compose`. With rootless Podman, `podman-compose` (1.6+) handles that
+through the `docker` shim, so you don't need Docker on the desktop.
 
 ## Pre-generating the world on the desktop
 
