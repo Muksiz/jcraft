@@ -13,6 +13,8 @@ services:
     stdin_open: true
     ports:
       - "25565:25565"
+      # BlueMap, local only. map.janix.fi reaches it through the tunnel.
+      - "127.0.0.1:8100:8100"
     environment:
       EULA: "TRUE"
       TZ: Europe/Helsinki

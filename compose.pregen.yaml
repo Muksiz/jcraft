@@ -5,7 +5,8 @@
 services:
   mc:
     restart: "no"
-    ports: !reset []
+    ports: !override
+      - "127.0.0.1:8100:8100"
     environment:
       MEMORY: ${PREGEN_MEMORY:-8G}
       # Rootless Podman: container root maps to your own user, so ./data stays
