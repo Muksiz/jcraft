@@ -31,3 +31,12 @@ scripts/rcon.sh list                      # online players
 ls -lh backups/                           # latest backups
 vcgencmd measure_temp; vcgencmd get_throttled   # Pi thermals (0x0 = not throttled)
 ```
+
+## Flyspeed mod (`flyspeed/`)
+- Our own server-side mod (`/flyspeed`). The built jar is committed in `mods/` and copied into
+  the server at startup.
+- The desktop has only a JRE. Build with `scripts/build-flyspeed.sh`, which runs Gradle in the
+  pinned `eclipse-temurin` JDK container. Use `javap` in that container against the cached
+  Minecraft jar to look up API changes (see README).
+- Minecraft is unobfuscated since 26.1, so use Mojang names. Commands use
+  `PermissionCheck` (e.g. `Commands.LEVEL_GAMEMASTERS.check(source.permissions())`).

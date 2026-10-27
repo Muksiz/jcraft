@@ -1,0 +1,22 @@
+{
+	"schemaVersion": 1,
+	"id": "flyspeed",
+	"version": "${version}",
+	"name": "Flyspeed",
+	"description": "Server-side /flyspeed command. Works with vanilla clients.",
+	"authors": ["Muksiz"],
+	"contact": {
+		"sources": "https://github.com/Muksiz/jcraft"
+	},
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["fi.janix.flyspeed.FlySpeed"]
+	},
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

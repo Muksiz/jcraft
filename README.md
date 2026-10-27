@@ -19,7 +19,7 @@ All versions are pinned in [`compose.yaml`](compose.yaml).
 
 - **Performance:** Lithium, FerriteCore, ScalableLux, C2ME
 - **Tools:** Chunky (pre-generation), spark (profiling), BlueMap (web map)
-- **Gameplay:** Universal Graves (with Polymer)
+- **Gameplay:** Universal Graves (with Polymer), Flyspeed (our own, see below)
 - **World generation:** Terralith, Tectonic, Incendium, Nullscape, Dungeons and Taverns, Structory
 - **Vanilla Tweaks:** player head drops, AFK display
 - **Resource pack:** Sparkles is offered to players for Incendium's item textures. It's optional.
@@ -105,13 +105,62 @@ docker compose restart mc
 scripts/backup-pull.sh               # (desktop) copy Pi backups locally
 ```
 
+## Flyspeed mod
+
+A small server-side mod in [`flyspeed/`](flyspeed). It works with vanilla clients.
+
+| Command | Who | Effect |
+|---|---|---|
+| `/flyspeed` | anyone | show your current multiplier |
+| `/flyspeed <0.1–5>` | anyone | set your own flight speed (`1` = vanilla) |
+| `/flyspeed <0.1–10>` | ops | ops can go up to 10× for themselves |
+| `/flyspeed <0.1–10> <players>` | ops | set it for other players |
+
+The speed is saved with the player, so it survives relogs and restarts.
+
+The built jar is committed in `mods/`. The server copies everything in that folder into its
+mods directory at startup, so the Pi doesn't need to build anything.
+
+### Building with the JDK container
+
+The desktop only has a Java *runtime*, so the mod is compiled inside a JDK container
+(`eclipse-temurin:25.0.4.1_1-jdk`, pinned in the script). Nothing needs to be installed and
+no sudo is required:
+
+```sh
+scripts/build-flyspeed.sh    # builds, then replaces mods/flyspeed-*.jar
+```
+
+- The script uses `docker` if it exists, otherwise `podman`.
+- Gradle's downloads (Minecraft, Fabric, Gradle itself) are cached in the `jcraft-gradle-cache`
+  volume. The first build takes about a minute, later ones a few seconds. Remove the cache with
+  `podman volume rm jcraft-gradle-cache`.
+- To run other Gradle tasks, use the same container by hand:
+  ```sh
+  podman run --rm -it -v "$PWD/flyspeed:/src:z" -v jcraft-gradle-cache:/root/.gradle -w /src \
+    docker.io/library/eclipse-temurin:25.0.4.1_1-jdk ./gradlew <task> --no-daemon
+  ```
+- To inspect a Minecraft class (e.g. after an API change breaks the build), run `javap` from
+  the same image against the cached jar:
+  ```sh
+  podman run --rm -v jcraft-gradle-cache:/root/.gradle docker.io/library/eclipse-temurin:25.0.4.1_1-jdk \
+    javap -cp /root/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged-deobf/26.3/minecraft-merged-deobf-26.3.jar \
+    net.minecraft.commands.Commands
+  ```
+
+After building, restart the server (`podman-compose down && podman-compose up -d mc`) and
+commit the new jar.
+
 ## Updating
 
 1. Pick the new Minecraft version. **Every** pack in `MODRINTH_PROJECTS` must support it.
    Check Modrinth.
 2. Update `VERSION`, `FABRIC_LOADER_VERSION`, the Modrinth version IDs (and their comments),
    the Vanilla Tweaks version in `packs/vanillatweaks.json`, and the Sparkles URL and SHA-1.
-3. Commit, then `git pull && docker compose up -d` on the Pi. The most recent backup is your
+3. Update `flyspeed/gradle.properties` and the `minecraft` range in
+   `flyspeed/src/main/resources/fabric.mod.json`, then run `scripts/build-flyspeed.sh`.
+   Check the latest Loom and Fabric API versions on <https://fabricmc.net/develop>.
+4. Commit, then `git pull && docker compose up -d` on the Pi. The most recent backup is your
    rollback.
 
 Already-generated chunks keep their old terrain. New biomes and structures from an update

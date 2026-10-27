@@ -86,6 +86,7 @@ services:
       - ./data:/data:z
       - ./config:/config:ro,z
       - ./packs:/packs:ro,z
+      - ./mods:/mods:ro,z
 
   backup:
     image: docker.io/itzg/mc-backup:2026.10.0
