@@ -20,6 +20,8 @@ README.md for the full setup.
 - `scripts/sync-world.sh push` overwrites the Pi world. Always `pull` first if players have
   been on the server, and ask before pushing.
 - Don't port-forward or expose RCON (25575) or SSH.
+- Stop the server only through compose (`stop`/`down`/`restart`), which honours
+  `stop_grace_period`. A bare `podman stop` waits only 10 s and can kill it before it saves.
 
 ## Monitoring (run on the Pi, or via `ssh pi 'cd jcraft && ...'`)
 ```sh

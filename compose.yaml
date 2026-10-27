@@ -11,6 +11,8 @@ services:
     restart: unless-stopped
     tty: true
     stdin_open: true
+    # Must exceed STOP_SERVER_ANNOUNCE_DELAY plus save time, or the server is killed unsaved.
+    stop_grace_period: 2m
     ports:
       - "25565:25565"
       # BlueMap, local only. map.janix.fi reaches it through the tunnel.
