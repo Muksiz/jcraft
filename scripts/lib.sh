@@ -16,3 +16,11 @@ confirm() {
   read -r -p "$1 Type 'yes' to continue: " answer
   [[ "$answer" == yes ]] || { echo "Aborted."; exit 1; }
 }
+
+# Docker Compose where Docker is installed (Pi), podman-compose otherwise (desktop).
+if command -v docker >/dev/null; then
+  compose_cmd="docker compose"
+else
+  compose_cmd="podman-compose"
+fi
+compose() { $compose_cmd "$@"; }

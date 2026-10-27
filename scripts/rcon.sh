@@ -4,7 +4,7 @@ set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
 if (($#)); then
-  docker compose exec -T mc rcon-cli "$@"
+  compose exec -T mc rcon-cli "$@"
 else
-  docker compose exec mc rcon-cli
+  compose exec mc rcon-cli
 fi

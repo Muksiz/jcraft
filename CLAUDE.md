@@ -7,7 +7,8 @@ README.md for the full setup.
 - **Pi**: runs `mc`, `backup`, `ddns`, `tunnel` (`COMPOSE_PROFILES=pi`). Reach it over SSH as
   `$PI_HOST` (default alias `pi`), with the repo in `~/jcraft`.
 - **Desktop**: Fedora with rootless Podman and podman-compose. Keep the scripts compatible with both
-  Docker Compose v2 (Pi) and podman-compose (desktop). Only used for `scripts/pregen.sh`
+  Docker Compose v2 (Pi) and podman-compose (desktop) via `compose` in `scripts/lib.sh`; there is no `docker`
+  command on the desktop. Only used for `scripts/pregen.sh`
   (Chunky pre-generation and BlueMap pre-rendering) and `scripts/backup-pull.sh`.
 
 ## Rules

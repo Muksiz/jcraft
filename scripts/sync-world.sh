@@ -14,8 +14,8 @@ pi_dir="$(setting PI_DIR jcraft)"
 direction="${1:-}"
 [[ "$direction" == push || "$direction" == pull ]] || { echo "Usage: $0 push|pull" >&2; exit 2; }
 
-if docker compose exec -T mc true >/dev/null 2>&1; then
-  echo "The local server is running. Stop it first: docker compose stop mc" >&2
+if compose exec -T mc true >/dev/null 2>&1; then
+  echo "The local server is running. Stop it first: $compose_cmd stop mc" >&2
   exit 1
 fi
 if ssh "$pi_host" "cd $pi_dir && docker compose exec -T mc true" >/dev/null 2>&1; then
@@ -40,4 +40,8 @@ for dir in world bluemap; do
     rsync -aH --delete --exclude session.lock --info=progress2 "$pi_host:$pi_dir/data/$dir/" "data/$dir/"
   fi
 done
-echo "Done. Start the server again with: docker compose up -d"
+if [[ "$direction" == push ]]; then
+  echo "Done. Start the Pi server with: ssh $pi_host 'cd $pi_dir && docker compose up -d'"
+else
+  echo "Done."
+fi

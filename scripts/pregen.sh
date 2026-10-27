@@ -4,7 +4,7 @@
 #
 # Usage: scripts/pregen.sh [--keep-running]
 #   --keep-running  leave the server up afterwards so BlueMap can finish rendering
-#                   (check with `scripts/rcon.sh bluemap`, then `docker compose stop mc`)
+#                   (check with `scripts/rcon.sh bluemap`, then `podman-compose stop mc`)
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
@@ -19,7 +19,7 @@ declare -A radius=(
 
 # Never start the Pi-only services (backup, ddns, tunnel) here.
 export COMPOSE_PROFILES=
-dc() { docker compose -f compose.yaml -f compose.pregen.yaml "$@"; }
+dc() { compose -f compose.yaml -f compose.pregen.yaml "$@"; }
 rcon() { dc exec -T mc rcon-cli "$@"; }
 
 mkdir -p data
@@ -31,7 +31,7 @@ for _ in $(seq 180); do
   dc exec -T mc mc-health >/dev/null 2>&1 && break
   sleep 5
 done
-dc exec -T mc mc-health >/dev/null || { echo "Server did not become healthy; see: docker compose logs mc"; exit 1; }
+dc exec -T mc mc-health >/dev/null || { echo "Server did not become healthy; see: $compose_cmd logs mc"; exit 1; }
 
 rcon "chunky quiet 60"
 for dim in "${!radius[@]}"; do
@@ -56,7 +56,7 @@ echo "All dimensions generated."
 rcon "save-all flush"
 if $keep_running; then
   echo "Server left running for BlueMap. Check: scripts/rcon.sh bluemap"
-  echo "Then stop with: docker compose stop mc"
+  echo "Then stop with: $compose_cmd stop mc"
 else
   dc stop mc
 fi

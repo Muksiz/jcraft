@@ -71,8 +71,9 @@ Pi over the LAN, or over Tailscale when you're away. Never port-forward SSH.
 Same clone. In `.env`, leave `COMPOSE_PROFILES` empty and set `PI_HOST` (an SSH host alias
 for the Pi) and `PI_DIR`. Use the **same `SEED`** as the Pi.
 
-The scripts call `docker compose`. With rootless Podman, `podman-compose` (1.6+) handles that
-through the `docker` shim, so you don't need Docker on the desktop.
+The scripts use `docker compose` where Docker is installed and `podman-compose` (1.6+)
+otherwise, so you don't need Docker on the desktop. The commands below use `docker compose`.
+On the desktop, type `podman-compose` instead.
 
 ## Pre-generating the world on the desktop
 

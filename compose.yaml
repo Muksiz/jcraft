@@ -7,7 +7,7 @@
 
 services:
   mc:
-    image: itzg/minecraft-server:2026.10.0-java25
+    image: docker.io/itzg/minecraft-server:2026.10.0-java25
     restart: unless-stopped
     tty: true
     stdin_open: true
@@ -88,7 +88,7 @@ services:
       - ./packs:/packs:ro,z
 
   backup:
-    image: itzg/mc-backup:2026.10.0
+    image: docker.io/itzg/mc-backup:2026.10.0
     profiles: [pi]
     restart: unless-stopped
     depends_on:
@@ -110,7 +110,7 @@ services:
 
   # Keeps the DNS-only A record for mc.janix.fi pointing at the current public IP.
   ddns:
-    image: favonia/cloudflare-ddns:1.17.1
+    image: docker.io/favonia/cloudflare-ddns:1.17.1
     profiles: [pi]
     restart: unless-stopped
     network_mode: host
@@ -127,7 +127,7 @@ services:
   # Serves BlueMap (mc:8100) at map.janix.fi through a Cloudflare Tunnel.
   # The public hostname is configured in the Cloudflare dashboard.
   tunnel:
-    image: cloudflare/cloudflared:2026.10.0
+    image: docker.io/cloudflare/cloudflared:2026.10.0
     profiles: [pi]
     restart: unless-stopped
     command: tunnel --no-autoupdate run
