@@ -1,0 +1,16 @@
+# Desktop override for pre-generating chunks (and optionally pre-rendering BlueMap).
+# Used by scripts/pregen.sh:
+#   docker compose -f compose.yaml -f compose.pregen.yaml ...
+
+services:
+  mc:
+    restart: "no"
+    ports: !reset []
+    environment:
+      MEMORY: ${PREGEN_MEMORY:-8G}
+      # Rootless Podman: container root maps to your own user, so ./data stays
+      # owned by you and sync-world.sh can read and write it.
+      UID: 0
+      GID: 0
+    volumes:
+      - ./config/bluemap/core.pregen.conf:/config/bluemap/core.conf:ro,z

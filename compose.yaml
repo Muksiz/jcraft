@@ -1,0 +1,136 @@
+# jcraft: Fabric Minecraft server for a Raspberry Pi 5 (8 GB).
+# Everything that affects the world is pinned here so the desktop (pre-generation)
+# and the Pi produce identical chunks. Bump versions only in a deliberate commit.
+#
+# Services in the "pi" profile (backup, DNS, tunnel) only run where
+# COMPOSE_PROFILES=pi is set in .env, i.e. on the Pi.
+
+services:
+  mc:
+    image: itzg/minecraft-server:2026.10.0-java25
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      TZ: Europe/Helsinki
+      TYPE: FABRIC
+      VERSION: "26.3"
+      FABRIC_LOADER_VERSION: "0.20.1"
+      FABRIC_LAUNCHER_VERSION: "1.1.2"
+      MEMORY: ${MEMORY:-5G}
+      USE_AIKAR_FLAGS: "true"
+
+      # Pinned Modrinth version IDs. Readable version numbers are in the comments.
+      MODRINTH_DOWNLOAD_DEPENDENCIES: none
+      MODRINTH_PROJECTS: |
+        fabric-api:EQKgpeKu
+        lithium:xS0Q8LSi
+        ferrite-core:d5ddUdiB
+        scalablelux:g4eqNSKd
+        c2me-fabric:gKKkuSYc
+        chunky:4Eotm6ov
+        spark:e3hsPc1o
+        bluemap:SX74rxzP
+        polymer:3fDXSiRx
+        universal-graves:r9hY06vQ
+        datapack:terralith:fqnsIp6d
+        datapack:tectonic:pxgiJaJp
+        datapack:incendium:1phtTdhj
+        datapack:nullscape:BJjbILcf
+        datapack:dungeons-and-taverns:iqFWpMVO
+        datapack:structory:EV74q3tR
+      # fabric-api        0.165.0+26.3
+      # lithium           mc26.3-0.26.2-fabric
+      # ferrite-core      9.0.0-fabric
+      # scalablelux       0.3.0-alpha.0.6+26.3
+      # c2me-fabric       0.4.2-alpha.0.106+26.3
+      # chunky            1.5.3
+      # spark             1.10.187-fabric
+      # bluemap           5.29-fabric
+      # polymer           0.18.5+26.3 (required by universal-graves)
+      # universal-graves  3.13.0+26.3
+      # terralith         2.6.5+26.3
+      # tectonic          3.0.29-datapack
+      # incendium         5.5.4+26.3
+      # nullscape         2.0.1+26.3
+      # dungeons-and-taverns 6.0.2
+      # structory         1.3.18+26.3
+      VANILLATWEAKS_FILE: /packs/vanillatweaks.json
+
+      # Optional textures for Incendium's custom items (Sparkles 1.1.12)
+      RESOURCE_PACK: https://cdn.modrinth.com/data/HfNmMQ9E/versions/NdrflooY/Sparkles_v1.1.12.zip
+      RESOURCE_PACK_SHA1: a897748140141b2a2b54f7f57193244aabbff620
+      RESOURCE_PACK_ENFORCE: "false"
+      RESOURCE_PACK_PROMPT: "Optional textures for Incendium items"
+
+      SEED: ${SEED:-}
+      MOTD: "jcraft"
+      DIFFICULTY: normal
+      MAX_PLAYERS: 10
+      VIEW_DISTANCE: 10
+      SIMULATION_DISTANCE: 6
+      ONLINE_MODE: "true"
+      ENABLE_WHITELIST: "true"
+      ENFORCE_WHITELIST: "true"
+      WHITELIST: ${WHITELIST:-}
+      EXISTING_WHITELIST_FILE: MERGE
+      OPS: ${OPS:-}
+      EXISTING_OPS_FILE: MERGE
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: ${RCON_PASSWORD:?set RCON_PASSWORD in .env}
+      STOP_SERVER_ANNOUNCE_DELAY: 10
+    volumes:
+      - ./data:/data:z
+      - ./config:/config:ro,z
+      - ./packs:/packs:ro,z
+
+  backup:
+    image: itzg/mc-backup:2026.10.0
+    profiles: [pi]
+    restart: unless-stopped
+    depends_on:
+      mc:
+        condition: service_healthy
+    environment:
+      TZ: Europe/Helsinki
+      RCON_HOST: mc
+      RCON_PASSWORD: ${RCON_PASSWORD}
+      INITIAL_DELAY: 5m
+      BACKUP_INTERVAL: 6h
+      PAUSE_IF_NO_PLAYERS: "true"
+      PRUNE_BACKUPS_DAYS: 7
+      # Mods, libraries and the BlueMap render are re-creatable, so skip them.
+      EXCLUDES: "*.jar,cache,logs,*.tmp,libraries,versions,.fabric,bluemap"
+    volumes:
+      - ./data:/data:ro,z
+      - ./backups:/backups:z
+
+  # Keeps the DNS-only A record for mc.janix.fi pointing at the current public IP.
+  ddns:
+    image: favonia/cloudflare-ddns:1.17.1
+    profiles: [pi]
+    restart: unless-stopped
+    network_mode: host
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [all]
+    security_opt: [no-new-privileges:true]
+    environment:
+      CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN:-}
+      DOMAINS: ${MC_DOMAIN:-mc.janix.fi}
+      PROXIED: "false"
+      IP6_PROVIDER: none
+
+  # Serves BlueMap (mc:8100) at map.janix.fi through a Cloudflare Tunnel.
+  # The public hostname is configured in the Cloudflare dashboard.
+  tunnel:
+    image: cloudflare/cloudflared:2026.10.0
+    profiles: [pi]
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    depends_on: [mc]
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:-}
