@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Pre-generate chunks on the desktop with Chunky, set matching world borders, then stop.
+# Pre-generate chunks on the desktop with Chunky, then stop.
 # Copy the result to the Pi afterwards with `scripts/sync-world.sh push`.
 #
 # Usage: scripts/pregen.sh [--keep-running]
@@ -36,8 +36,6 @@ dc exec -T mc mc-health >/dev/null || { echo "Server did not become healthy; see
 rcon "chunky quiet 60"
 for dim in "${!radius[@]}"; do
   r="${radius[$dim]}"
-  rcon "execute in $dim run worldborder center 0 0"
-  rcon "execute in $dim run worldborder set $((r * 2))"
   rcon "chunky start $dim square 0 0 $r"
   rcon "chunky confirm"  # replaces a finished task from an earlier run
 done

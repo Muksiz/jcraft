@@ -77,15 +77,15 @@ through the `docker` shim, so you don't need Docker on the desktop.
 ## Pre-generating the world on the desktop
 
 ```sh
-scripts/pregen.sh                   # generates, sets world borders, stops
+scripts/pregen.sh                   # generates, then stops
 scripts/pregen.sh --keep-running    # same, but leaves the server up so BlueMap can render
 scripts/sync-world.sh push          # copy world (and map render) to the Pi
 ssh pi 'cd jcraft && docker compose up -d'
 ```
 
 Radii are set in `.env` (`PREGEN_RADIUS_*`, in blocks). The defaults are 5000 for the
-Overworld, 1000 for the Nether and 3000 for the End. Each dimension gets a matching world
-border, so the Pi never has to generate new terrain.
+Overworld, 1000 for the Nether and 3000 for the End. The world has no border: past the
+pre-generated area the Pi generates new chunks live, which is slower.
 
 **Extending the world later:** stop the Pi server, run `scripts/sync-world.sh pull`,
 raise the radii, run `pregen.sh`, then `sync-world.sh push`. `push` replaces the Pi's world,
