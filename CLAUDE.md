@@ -17,7 +17,7 @@ README.md for the full setup.
 - Anything that affects world generation (MC version, mods, datapacks, seed) must stay
   identical on desktop and Pi. Change it only in `compose.yaml` and commit it.
 - Keep every Modrinth entry pinned to a version ID, with the readable version in the comment
-  block. All 22 entries must support the chosen `VERSION`.
+  block. All 23 entries must support the chosen `VERSION`.
 - When bumping `VERSION`, also set `min_format`/`max_format` in `packs/jcraft/pack.mcmeta` to the
   new data pack format (`pack_version.data_major` in the server jar's `version.json`).
 - `scripts/sync-world.sh push` overwrites the Pi world. Always `pull` first if players have

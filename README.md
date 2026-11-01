@@ -15,7 +15,7 @@ All versions are pinned in [`compose.yaml`](compose.yaml).
 
 - **Performance:** Lithium, FerriteCore, ScalableLux, C2ME
 - **Tools:** Chunky, spark, BlueMap
-- **Gameplay:** Universal Graves, Flyspeed (ours, in [`flyspeed/`](flyspeed))
+- **Gameplay:** Universal Graves, Timber Strike (tree felling), Flyspeed (ours, in [`flyspeed/`](flyspeed))
 - **World generation:** Terralith, Tectonic, Incendium, Nullscape, Dungeons and Taverns, Structory,
   Structory: Towers, Towns and Towers, Trek, Hopo Better Mineshaft / Underwater Ruins / Ruined Portals
 - **Vanilla Tweaks:** player head drops, AFK display
