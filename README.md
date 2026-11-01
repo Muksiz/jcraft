@@ -16,7 +16,8 @@ All versions are pinned in [`compose.yaml`](compose.yaml).
 - **Performance:** Lithium, FerriteCore, ScalableLux, C2ME
 - **Tools:** Chunky, spark, BlueMap
 - **Gameplay:** Universal Graves, Flyspeed (ours, in [`flyspeed/`](flyspeed))
-- **World generation:** Terralith, Tectonic, Incendium, Nullscape, Dungeons and Taverns, Structory
+- **World generation:** Terralith, Tectonic, Incendium, Nullscape, Dungeons and Taverns, Structory,
+  Structory: Towers, Towns and Towers, Trek, Hopo Better Mineshaft / Underwater Ruins / Ruined Portals
 - **Vanilla Tweaks:** player head drops, AFK display
 - **Game rules:** set by our datapack in [`packs/jcraft`](packs/jcraft) on every start;
   one sleeping player skips the night
