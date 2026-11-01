@@ -24,7 +24,7 @@ services:
       VERSION: "26.3"
       FABRIC_LOADER_VERSION: "0.20.1"
       FABRIC_LAUNCHER_VERSION: "1.1.2"
-      MEMORY: ${MEMORY:-5G}
+      MEMORY: ${MEMORY:-6G}
       USE_AIKAR_FLAGS: "true"
 
       # Pinned Modrinth version IDs. Readable version numbers are in the comments.
@@ -80,8 +80,8 @@ services:
       MOTD: "jcraft"
       DIFFICULTY: normal
       SPAWN_PROTECTION: 0
-      MAX_PLAYERS: 10
-      VIEW_DISTANCE: 10
+      MAX_PLAYERS: 20
+      VIEW_DISTANCE: 12
       SIMULATION_DISTANCE: 6
       ONLINE_MODE: "true"
       ENABLE_WHITELIST: "true"
