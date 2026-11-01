@@ -52,7 +52,7 @@ services:
         datapack:hopo-better-mineshaft:iybK68CI
         datapack:hopo-better-underwater-ruins:xkfBYjxn
         datapack:hopo-better-ruined-portals:lHhDooco
-        datapack:timber-strike:qT8VCy0N
+        datapack:tree-vein-miner:N0Dcztkm
       # fabric-api        0.165.0+26.3
       # lithium           mc26.3-0.26.2-fabric
       # ferrite-core      9.0.0-fabric
@@ -75,7 +75,7 @@ services:
       # hopo-better-mineshaft         1.3.8-datapack
       # hopo-better-underwater-ruins  1.2.9-datapack
       # hopo-better-ruined-portals    1.5.2-datapack
-      # timber-strike     6.1 (whole tree falls when one log is cut; sneak to cut one)
+      # tree-vein-miner   4.3.2 (crouch while cutting a log to fell the whole tree)
       # ./mods is copied into data/mods without removing anything, so delete our own
       # jar first; otherwise a renamed flyspeed jar leaves a duplicate mod behind.
       REMOVE_OLD_MODS: "TRUE"
