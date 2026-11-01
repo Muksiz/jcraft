@@ -63,6 +63,8 @@ services:
       # dungeons-and-taverns 6.0.2
       # structory         1.3.18+26.3
       VANILLATWEAKS_FILE: /packs/vanillatweaks.json
+      # Our own datapack: sets game rules on every start (see packs/jcraft).
+      DATAPACKS: /packs/jcraft
 
       # Optional textures for Incendium's custom items (Sparkles 1.1.12)
       RESOURCE_PACK: https://cdn.modrinth.com/data/HfNmMQ9E/versions/NdrflooY/Sparkles_v1.1.12.zip
