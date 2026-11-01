@@ -18,6 +18,8 @@ All versions are pinned in [`compose.yaml`](compose.yaml).
 - **Gameplay:** Universal Graves, Flyspeed (ours, in [`flyspeed/`](flyspeed))
 - **World generation:** Terralith, Tectonic, Incendium, Nullscape, Dungeons and Taverns, Structory
 - **Vanilla Tweaks:** player head drops, AFK display
+- **Game rules:** set by our datapack in [`packs/jcraft`](packs/jcraft) on every start;
+  one sleeping player skips the night
 
 ## Pre-generation
 
