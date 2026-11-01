@@ -13,5 +13,9 @@ services:
       # owned by you and sync-world.sh can read and write it.
       UID: 0
       GID: 0
+      # Overwrite /data/config with the files below even though the mods rewrite them
+      # at startup (the default skips destination files that are newer).
+      SYNC_SKIP_NEWER_IN_DESTINATION: "false"
     volumes:
       - ./config/bluemap/core.pregen.conf:/config/bluemap/core.conf:ro,z
+      - ./config/c2me.pregen.toml:/config/c2me.toml:ro,z
