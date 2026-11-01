@@ -17,7 +17,7 @@ declare -A radius=(
   [minecraft:the_end]="$(setting PREGEN_RADIUS_END 3000)"
 )
 
-# Never start the Pi-only services (backup, ddns, tunnel) here.
+# Never start the Pi-only services (ddns, tunnel) here.
 export COMPOSE_PROFILES=
 dc() { compose -f compose.yaml -f compose.pregen.yaml "$@"; }
 rcon() { dc exec -T mc rcon-cli "$@"; }

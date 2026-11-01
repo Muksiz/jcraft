@@ -4,15 +4,16 @@ Fabric Minecraft server (itzg/minecraft-server) on a Raspberry Pi 5 (8 GB, NVMe)
 README.md for the full setup.
 
 ## Hosts
-- **Pi**: runs `mc`, `backup`, `ddns`, `tunnel` (`COMPOSE_PROFILES=pi`). Reach it over SSH as
+- **Pi**: runs `mc`, `ddns`, `tunnel` (`COMPOSE_PROFILES=pi`). Reach it over SSH as
   `$PI_HOST` (default alias `pi`), with the repo in `~/jcraft`.
 - **Desktop**: Fedora with rootless Podman and podman-compose. Keep the scripts compatible with both
   Docker Compose v2 (Pi) and podman-compose (desktop) via `compose` in `scripts/lib.sh`; there is no `docker`
   command on the desktop. Only used for `scripts/pregen.sh`
-  (Chunky pre-generation and BlueMap pre-rendering) and `scripts/backup-pull.sh`.
+  (Chunky pre-generation and BlueMap pre-rendering).
 
 ## Rules
 - Never edit `data/` or commit `.env`, `data/` or `backups/`.
+- Backups are done manually by the user; there is no backup service.
 - Anything that affects world generation (MC version, mods, datapacks, seed) must stay
   identical on desktop and Pi. Change it only in `compose.yaml` and commit it.
 - Keep every Modrinth entry pinned to a version ID, with the readable version in the comment
@@ -30,7 +31,6 @@ docker compose logs --tail 200 mc         # recent server log
 scripts/rcon.sh spark tps                 # TPS/MSPT; healthy is 20 TPS, MSPT < 50
 scripts/rcon.sh spark health              # memory, CPU, disk
 scripts/rcon.sh list                      # online players
-ls -lh backups/                           # latest backups
 vcgencmd measure_temp; vcgencmd get_throttled   # Pi thermals (0x0 = not throttled)
 ```
 

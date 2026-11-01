@@ -1,9 +1,9 @@
-# jcraft: Fabric Minecraft server for a Raspberry Pi 5 (8 GB).
-# Everything that affects the world is pinned here so the desktop (pre-generation)
-# and the Pi produce identical chunks. Bump versions only in a deliberate commit.
+# jcraft: Fabric Minecraft server.
+# Everything that affects the world is pinned here so the pre-generation machine
+# and the server produce identical chunks. Bump versions only in a deliberate commit.
 #
-# Services in the "pi" profile (backup, DNS, tunnel) only run where
-# COMPOSE_PROFILES=pi is set in .env, i.e. on the Pi.
+# Services in the "pi" profile (DNS, tunnel) only run where COMPOSE_PROFILES=pi
+# is set in .env, i.e. on the server host.
 
 services:
   mc:
@@ -73,6 +73,7 @@ services:
       SEED: ${SEED:-}
       MOTD: "jcraft"
       DIFFICULTY: normal
+      SPAWN_PROTECTION: 0
       MAX_PLAYERS: 10
       VIEW_DISTANCE: 10
       SIMULATION_DISTANCE: 6
@@ -91,27 +92,6 @@ services:
       - ./config:/config:ro,z
       - ./packs:/packs:ro,z
       - ./mods:/mods:ro,z
-
-  backup:
-    image: docker.io/itzg/mc-backup:2026.10.0
-    profiles: [pi]
-    restart: unless-stopped
-    depends_on:
-      mc:
-        condition: service_healthy
-    environment:
-      TZ: Europe/Helsinki
-      RCON_HOST: mc
-      RCON_PASSWORD: ${RCON_PASSWORD}
-      INITIAL_DELAY: 5m
-      BACKUP_INTERVAL: 6h
-      PAUSE_IF_NO_PLAYERS: "true"
-      PRUNE_BACKUPS_DAYS: 7
-      # Mods, libraries and the BlueMap render are re-creatable, so skip them.
-      EXCLUDES: "*.jar,cache,logs,*.tmp,libraries,versions,.fabric,bluemap"
-    volumes:
-      - ./data:/data:ro,z
-      - ./backups:/backups:z
 
   # Keeps the DNS-only A record for mc.janix.fi pointing at the current public IP.
   ddns:
