@@ -1,6 +1,6 @@
 .env
-data/
-backups/
+/data/
+/backups/
 
 # Flyspeed mod build output
 flyspeed/.gradle/
