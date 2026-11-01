@@ -6,3 +6,7 @@
 flyspeed/.gradle/
 flyspeed/build/
 flyspeed/run/
+
+# Empty mount point Podman creates for the c2me.pregen.toml bind mount in compose.pregen.yaml.
+# Never commit it: the Pi would copy an empty C2ME config into the server.
+/config/c2me.toml
