@@ -6,6 +6,8 @@
 #
 # Both servers must be stopped. The destination's world is replaced, so pull
 # before pre-generating again once people have played on the Pi.
+# The checks below must not read stdin (ssh -n, </dev/null), or they swallow the
+# answer to the confirmation prompt when it is piped in.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
@@ -14,11 +16,11 @@ pi_dir="$(setting PI_DIR jcraft)"
 direction="${1:-}"
 [[ "$direction" == push || "$direction" == pull ]] || { echo "Usage: $0 push|pull" >&2; exit 2; }
 
-if compose exec -T mc true >/dev/null 2>&1; then
+if compose exec -T mc true </dev/null >/dev/null 2>&1; then
   echo "The local server is running. Stop it first: $compose_cmd stop mc" >&2
   exit 1
 fi
-if ssh "$pi_host" "cd $pi_dir && docker compose exec -T mc true" >/dev/null 2>&1; then
+if ssh -n "$pi_host" "cd $pi_dir && docker compose exec -T mc true" >/dev/null 2>&1; then
   echo "The Pi server is running. Stop it first: ssh $pi_host 'cd $pi_dir && docker compose stop mc'" >&2
   exit 1
 fi
@@ -30,13 +32,13 @@ else
 fi
 
 mkdir -p data
-ssh "$pi_host" "mkdir -p $pi_dir/data"
+ssh -n "$pi_host" "mkdir -p $pi_dir/data"
 for dir in world bluemap; do
   if [[ "$direction" == push ]]; then
     [[ -d "data/$dir" ]] || continue
     rsync -aH --delete --exclude session.lock --info=progress2 "data/$dir/" "$pi_host:$pi_dir/data/$dir/"
   else
-    ssh "$pi_host" "test -d $pi_dir/data/$dir" || continue
+    ssh -n "$pi_host" "test -d $pi_dir/data/$dir" || continue
     rsync -aH --delete --exclude session.lock --info=progress2 "$pi_host:$pi_dir/data/$dir/" "data/$dir/"
   fi
 done
