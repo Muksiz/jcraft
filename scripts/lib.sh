@@ -7,6 +7,8 @@ setting() {
   local value="${!1:-}"
   if [[ -z "$value" && -f .env ]]; then
     value="$(grep -E "^$1=" .env | tail -n1 | cut -d= -f2-)"
+    # Strip the optional quotes Compose allows: NAME="value" or NAME='value'.
+    [[ "$value" =~ ^\"(.*)\"$ || "$value" =~ ^\'(.*)\'$ ]] && value="${BASH_REMATCH[1]}"
   fi
   printf '%s' "${value:-$2}"
 }

@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -21,6 +22,7 @@ import net.minecraft.server.level.ServerPlayer;
  *
  * The speed lives in the player's abilities, which the server syncs to the client
  * and saves with the player, so vanilla clients work and it survives relogs.
+ * Respawning (death, leaving the End) creates a new player without it, so we copy it over.
  */
 public class FlySpeed implements ModInitializer {
 	private static final float VANILLA_SPEED = 0.05f;
@@ -40,6 +42,12 @@ public class FlySpeed implements ModInitializer {
 								.then(Commands.argument("targets", EntityArgument.players())
 										.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 										.executes(ctx -> set(ctx, EntityArgument.getPlayers(ctx, "targets"), false))))));
+
+		// Runs after the respawn packet, so the client gets the speed for its new player too.
+		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
+			newPlayer.getAbilities().setFlyingSpeed(oldPlayer.getAbilities().getFlyingSpeed());
+			newPlayer.onUpdateAbilities();
+		});
 	}
 
 	private static int show(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
