@@ -40,18 +40,6 @@ services:
         bluemap:SX74rxzP
         polymer:3fDXSiRx
         universal-graves:r9hY06vQ
-        datapack:terralith:fqnsIp6d
-        datapack:tectonic:pxgiJaJp
-        datapack:incendium:1phtTdhj
-        datapack:nullscape:BJjbILcf
-        datapack:dungeons-and-taverns:iqFWpMVO
-        datapack:structory:EV74q3tR
-        datapack:structory-towers:4ahPGAsT
-        datapack:towns-and-towers:pQmAWlaS
-        datapack:trek:LvAOPa1r
-        datapack:hopo-better-mineshaft:iybK68CI
-        datapack:hopo-better-underwater-ruins:xkfBYjxn
-        datapack:hopo-better-ruined-portals:lHhDooco
         datapack:tree-vein-miner:N0Dcztkm
       # fabric-api        0.165.0+26.3
       # lithium           mc26.3-0.26.2-fabric
@@ -63,18 +51,6 @@ services:
       # bluemap           5.29-fabric
       # polymer           0.18.5+26.3 (required by universal-graves)
       # universal-graves  3.13.0+26.3
-      # terralith         2.6.5+26.3
-      # tectonic          3.0.29-datapack
-      # incendium         5.5.4+26.3
-      # nullscape         2.0.1+26.3
-      # dungeons-and-taverns 6.0.2
-      # structory         1.3.18+26.3
-      # structory-towers  1.0.19+26.3
-      # towns-and-towers  26.3-datapack
-      # trek              B0.6.2.1 (beta)
-      # hopo-better-mineshaft         1.3.8-datapack
-      # hopo-better-underwater-ruins  1.2.9-datapack
-      # hopo-better-ruined-portals    1.5.2-datapack
       # tree-vein-miner   4.3.2 (crouch while cutting a log to fell the whole tree)
       # ./mods is copied into data/mods without removing anything, so delete our own
       # jar first; otherwise a renamed flyspeed jar leaves a duplicate mod behind.
@@ -83,12 +59,6 @@ services:
       VANILLATWEAKS_FILE: /packs/vanillatweaks.json
       # Our own datapack: sets game rules on every start (see packs/jcraft).
       DATAPACKS: /packs/jcraft
-
-      # Optional textures for Incendium's custom items (Sparkles 1.1.12)
-      RESOURCE_PACK: https://cdn.modrinth.com/data/HfNmMQ9E/versions/NdrflooY/Sparkles_v1.1.12.zip
-      RESOURCE_PACK_SHA1: a897748140141b2a2b54f7f57193244aabbff620
-      RESOURCE_PACK_ENFORCE: "false"
-      RESOURCE_PACK_PROMPT: "Optional textures for Incendium items"
 
       SEED: ${SEED:-}
       MOTD: "jcraft"
