@@ -59,6 +59,8 @@ services:
       VANILLATWEAKS_FILE: /packs/vanillatweaks.json
       # Our own datapack: sets game rules on every start (see packs/jcraft).
       DATAPACKS: /packs/jcraft
+      # Mod config overrides applied on every start (see patches/).
+      PATCH_DEFINITIONS: /patches
 
       SEED: ${SEED:-}
       MOTD: "jcraft"
@@ -82,6 +84,7 @@ services:
       - ./config:/config:ro,z
       - ./packs:/packs:ro,z
       - ./mods:/mods:ro,z
+      - ./patches:/patches:ro,z
 
   # Keeps the DNS-only A record for mc.janix.fi pointing at the current public IP.
   ddns:

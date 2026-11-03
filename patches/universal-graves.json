@@ -1,0 +1,11 @@
+{
+  "file": "/data/config/universal-graves/config.json",
+  "ops": [
+    {
+      "$set": {
+        "path": "$.storage.experience_type",
+        "value": "drop"
+      }
+    }
+  ]
+}
