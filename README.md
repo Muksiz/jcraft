@@ -17,7 +17,8 @@ All versions are pinned in [`compose.yaml`](compose.yaml).
 - **Tools:** Chunky, spark, BlueMap
 - **Gameplay:** Universal Graves (items only; XP drops as in vanilla, set in
   [`patches/`](patches)), Tree Vein Miner (crouch to fell trees), Flyspeed (ours, in [`flyspeed/`](flyspeed))
-- **World generation:** vanilla (no worldgen or structure datapacks)
+- **World generation:** vanilla terrain; structures from Dungeons and Taverns, Towns and Towers,
+  Trek and Structory in chunks generated from 2026-11-04 on (the older area stays vanilla)
 - **Vanilla Tweaks:** player head drops, AFK display
 - **Game rules:** set by our datapack in [`packs/jcraft`](packs/jcraft) on every start;
   one sleeping player skips the night

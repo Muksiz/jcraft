@@ -41,6 +41,10 @@ services:
         polymer:3fDXSiRx
         universal-graves:r9hY06vQ
         datapack:tree-vein-miner:N0Dcztkm
+        datapack:dungeons-and-taverns:B1bgkN74
+        datapack:towns-and-towers:pQmAWlaS
+        datapack:trek:LvAOPa1r
+        datapack:structory:EV74q3tR
       # fabric-api        0.165.0+26.3
       # lithium           mc26.3-0.26.2-fabric
       # ferrite-core      9.0.0-fabric
@@ -52,6 +56,11 @@ services:
       # polymer           0.18.5+26.3 (required by universal-graves)
       # universal-graves  3.13.0+26.3
       # tree-vein-miner   4.3.2 (crouch while cutting a log to fell the whole tree)
+      # Structure datapacks, added 2026-11-04. Chunks generated before that stay vanilla.
+      # dungeons-and-taverns 6.1.0
+      # towns-and-towers  26.3-datapack
+      # trek              B0.6.2.1 (beta)
+      # structory         1.3.18+26.3
       # ./mods is copied into data/mods without removing anything, so delete our own
       # jar first; otherwise a renamed flyspeed jar leaves a duplicate mod behind.
       REMOVE_OLD_MODS: "TRUE"
