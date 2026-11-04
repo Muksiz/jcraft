@@ -58,7 +58,10 @@ for z in zips:
 if OUT.exists():
     shutil.rmtree(OUT)
 for name, data in sorted(files.items()):
-    path = OUT / name
+    # Entry names come from downloaded zips; never write outside OUT.
+    path = (OUT / name).resolve()
+    if ".." in name.split("/") or "\\" in name or not path.is_relative_to(OUT.resolve()):
+        sys.exit(f"Unsafe path in a structure pack: {name}")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(data)
 mcmeta = json.loads((ROOT / "packs/jcraft/pack.mcmeta").read_text())
