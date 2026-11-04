@@ -1,0 +1,13 @@
+{
+  "structures": [],
+  "placement": {
+    "exclusion_zone": {
+      "other_set": "nova_structures:ocean_structures",
+      "chunk_count": 10
+    },
+    "spacing": 32,
+    "separation": 8,
+    "salt": 6574832,
+    "type": "minecraft:random_spread"
+  }
+}

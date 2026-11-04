@@ -56,7 +56,9 @@ services:
       # polymer           0.18.5+26.3 (required by universal-graves)
       # universal-graves  3.13.0+26.3
       # tree-vein-miner   4.3.2 (crouch while cutting a log to fell the whole tree)
-      # Structure datapacks, added 2026-11-04. Chunks generated before that stay vanilla.
+      # Structure datapacks, added 2026-11-04 and turned off for new chunks the same day by
+      # packs/vanilla-gen. They stay installed so the structures generated in between keep
+      # their loot, mobs and enchantments.
       # dungeons-and-taverns 6.1.0
       # towns-and-towers  26.3-datapack
       # trek              B0.6.2.1 (beta)
@@ -66,8 +68,10 @@ services:
       REMOVE_OLD_MODS: "TRUE"
       REMOVE_OLD_MODS_INCLUDE: "flyspeed-*.jar"
       VANILLATWEAKS_FILE: /packs/vanillatweaks.json
-      # Our own datapack: sets game rules on every start (see packs/jcraft).
-      DATAPACKS: /packs/jcraft
+      # Our own datapacks: jcraft sets game rules on every start; vanilla-gen stops the
+      # structure packs placing structures in new chunks (from 2026-11-04, see
+      # scripts/gen-vanilla-gen.py). vanilla-gen must load after the structure packs.
+      DATAPACKS: /packs/jcraft,/packs/vanilla-gen
       # Mod config overrides applied on every start (see patches/).
       PATCH_DEFINITIONS: /patches
 

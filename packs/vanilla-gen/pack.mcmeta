@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "description": "jcraft: no structure-pack structures in new chunks",
+    "min_format": 121,
+    "max_format": 121
+  }
+}
