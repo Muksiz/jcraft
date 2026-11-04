@@ -77,6 +77,9 @@ services:
 
       SEED: ${SEED:-}
       MOTD: "jcraft"
+      # Server list icon (64x64). OVERRIDE_ICON replaces the copy in data/ on every start.
+      ICON: /assets/server-icon.png
+      OVERRIDE_ICON: "TRUE"
       DIFFICULTY: normal
       SPAWN_PROTECTION: 0
       MAX_PLAYERS: 20
@@ -98,6 +101,7 @@ services:
       - ./packs:/packs:ro,z
       - ./mods:/mods:ro,z
       - ./patches:/patches:ro,z
+      - ./assets:/assets:ro,z
 
   # Keeps the DNS-only A record for mc.janix.fi pointing at the current public IP.
   ddns:
