@@ -64,9 +64,9 @@ services:
       # trek              B0.6.2.1 (beta)
       # structory         1.3.18+26.3
       # ./mods is copied into data/mods without removing anything, so delete our own
-      # jar first; otherwise a renamed flyspeed jar leaves a duplicate mod behind.
+      # jar first; otherwise a renamed jar of ours leaves a duplicate mod behind.
       REMOVE_OLD_MODS: "TRUE"
-      REMOVE_OLD_MODS_INCLUDE: "flyspeed-*.jar"
+      REMOVE_OLD_MODS_INCLUDE: "flyspeed-*.jar,gamble-*.jar"
       VANILLATWEAKS_FILE: /packs/vanillatweaks.json
       # Our own datapacks: jcraft sets game rules on every start; vanilla-gen stops the
       # structure packs placing structures in new chunks (from 2026-11-04, see

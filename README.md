@@ -16,7 +16,7 @@ All versions are pinned in [`compose.yaml`](compose.yaml).
 - **Performance:** Lithium, FerriteCore, ScalableLux, C2ME
 - **Tools:** Chunky, spark, BlueMap
 - **Gameplay:** Universal Graves (items only; XP drops as in vanilla, set in
-  [`patches/`](patches)), Tree Vein Miner (crouch to fell trees), Flyspeed (ours, in [`flyspeed/`](flyspeed))
+  [`patches/`](patches)), Tree Vein Miner (crouch to fell trees), Flyspeed and Gamble (ours, in [`flyspeed/`](flyspeed) and [`gamble/`](gamble))
 - **World generation:** vanilla terrain; structures from Dungeons and Taverns, Towns and Towers,
   Trek and Structory in chunks generated from 2026-11-04 on (the older area stays vanilla)
 - **Vanilla Tweaks:** player head drops, AFK display
@@ -41,4 +41,12 @@ scripts/sync-world.sh pull|push      # push replaces the server's world: pull fi
 | `/flyspeed <0.1–5>` | anyone | set your own flight speed (`1` = vanilla) |
 | `/flyspeed <0.1–10> [players]` | ops | up to 10×, for yourself or others |
 
-Rebuild with `scripts/build-flyspeed.sh` and commit the jar in `mods/`.
+Rebuild with `scripts/build-mod.sh flyspeed` and commit the jar in `mods/`.
+
+## Gamble
+
+`/gamble <1–64>` bets that many of your own golden carrots on a coin flip. The bet is taken at
+once and announced in chat; 3 seconds later the result is announced. A win pays back double the
+bet, a loss keeps it. One gamble at a time per player.
+
+Rebuild with `scripts/build-mod.sh gamble` and commit the jar in `mods/`.

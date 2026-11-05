@@ -1,0 +1,22 @@
+{
+	"schemaVersion": 1,
+	"id": "gamble",
+	"version": "${version}",
+	"name": "Gamble",
+	"description": "Server-side /gamble command: bet golden carrots on a coin flip. Works with vanilla clients.",
+	"authors": ["Muksiz"],
+	"contact": {
+		"sources": "https://github.com/Muksiz/jcraft"
+	},
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["fi.janix.gamble.Gamble"]
+	},
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
