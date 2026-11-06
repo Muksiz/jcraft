@@ -14,7 +14,7 @@ Every mod is server-side, so players join with a **vanilla Java client**.
 All versions are pinned in [`compose.yaml`](compose.yaml).
 
 - **Performance:** Lithium, FerriteCore, ScalableLux, C2ME
-- **Tools:** Chunky, spark, BlueMap
+- **Tools:** Chunky, spark, BlueMap, WorldEdit
 - **Gameplay:** Universal Graves (items only; XP drops as in vanilla, set in
   [`patches/`](patches)), Tree Vein Miner (crouch to fell trees), Flyspeed and Gamble (ours, in [`flyspeed/`](flyspeed) and [`gamble/`](gamble))
 - **World generation:** vanilla terrain; structures from Dungeons and Taverns, Towns and Towers,
